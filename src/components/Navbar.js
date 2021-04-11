@@ -41,7 +41,12 @@ const FlexWrapper = styled.div`
   z-index: 999;
   top: 0;
   @media (max-width: 768px) {
+    > :first-child {
+      padding-left: 20px;
+    }
     align-items: flex-start;
+    padding: 25px 10px;
+    width: calc(100% - 20px);
   }
 `;
 
