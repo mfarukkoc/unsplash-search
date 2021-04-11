@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Logo from "../assets/Logo.svg";
 import Dropdown from "./Dropdown";
-const Navbar = ({ searchQuery, setSearchQuery }) => {
+const Navbar = ({ searchQuery, setSearchQuery, onSearch }) => {
   const handleChange = (e) => {
     setSearchQuery({ ...searchQuery, search: e.target.value });
   };
-  const [selected, setSelected] = useState(-1);
+  const [selected, setSelected] = useState({ index: -1, id: undefined });
   useEffect(() => {
     setSearchQuery({ ...searchQuery, collection: selected });
   }, [selected]);
+
   return (
     <FlexWrapper>
       <img src={Logo} alt="Chamelon logo"></img>
@@ -19,9 +20,12 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
           onChange={handleChange}
           defaultValue={searchQuery.search}
           placeholder="Query"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") onSearch();
+          }}
         ></QueryInput>
         <Dropdown selected={selected} setSelected={setSelected}></Dropdown>
-        <SearchButton>SEARCH</SearchButton>
+        <SearchButton onClick={onSearch}>SEARCH</SearchButton>
       </InputWrap>
     </FlexWrapper>
   );
@@ -34,6 +38,7 @@ const FlexWrapper = styled.div`
   padding: 25px 50px;
   width: calc(100% - 100px);
   position: fixed;
+  z-index: 999;
   top: 0;
   @media (max-width: 768px) {
     align-items: flex-start;

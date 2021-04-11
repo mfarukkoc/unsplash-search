@@ -1,27 +1,36 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+const options = [
+  {
+    title: "History",
+    id: "4940344"
+  },
+  {
+    title: "Art",
+    id: "4888185"
+  },
+  {
+    title: "Health",
+    id: "4887794"
+  },
+  {
+    title: "Tech",
+    id: "4887749"
+  },
+  {
+    title: "Geography",
+    id: "4887920"
+  },
+  {
+    title: "Winter",
+    id: "3178572"
+  }
+];
 const Dropdown = ({ selected, setSelected }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const options = [
-    {
-      title: "New York",
-      selected: false,
-      key: "location"
-    },
-    {
-      title: "Dublin",
-      selected: false,
-      key: "location"
-    },
-    {
-      title: "California",
-      selected: false,
-      key: "location"
-    }
-  ];
-  const handleSelect = (index) => {
-    setSelected(index);
+  const handleSelect = (index, id) => {
+    setSelected({ index: index, id: id });
     setIsOpen(false);
   };
   return (
@@ -41,10 +50,10 @@ const Dropdown = ({ selected, setSelected }) => {
             setIsOpen(!isOpen);
           }
         }}
-        selected={selected}
+        selected={selected.index}
         tabIndex="0"
       >
-        {selected === -1 ? "Collections" : options[selected].title}
+        {selected.index === -1 ? "Collections" : options[selected.index].title}
         <ExpandTriangle
           width="10"
           height="7"
@@ -59,11 +68,37 @@ const Dropdown = ({ selected, setSelected }) => {
         </ExpandTriangle>
       </Header>
       <OptionsWrapper active={isOpen}>
+        {selected.index !== -1 ? (
+          <Option
+            tabIndex="0"
+            key="option-none"
+            onClick={() => {
+              handleSelect(-1, "");
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleSelect(-1, "");
+              }
+            }}
+          >
+            None
+          </Option>
+        ) : (
+          ""
+        )}
         {options.map((option, index) => (
           <Option
             tabIndex="0"
+            key={option.id}
             onClick={() => {
-              handleSelect(index);
+              handleSelect(index, option.id);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleSelect(index, option.id);
+              }
             }}
           >
             {option.title}
