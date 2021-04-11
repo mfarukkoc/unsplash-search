@@ -34,6 +34,7 @@ const FlexWrapper = styled.div`
   padding: 25px 50px;
   width: calc(100% - 100px);
   position: fixed;
+  top: 0;
   @media (max-width: 768px) {
     align-items: flex-start;
   }
@@ -101,4 +102,5 @@ const SearchButton = styled.button`
   letter-spacing: 0.1em;
   color: #ffffff;
 `;
+
 export default Navbar;
