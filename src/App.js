@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import styled from "styled-components";
 import Masonry from "react-masonry-css";
@@ -6,7 +6,7 @@ import unsplashService from "./unsplashService";
 import Spinner from "./components/Spinner";
 function App() {
   const [searchQuery, setSearchQuery] = useState({
-    search: "",
+    search: "Istanbul",
     collection: ""
   });
   const [error, setError] = useState(false);
@@ -40,6 +40,9 @@ function App() {
 
     await onSearch();
   };
+  useEffect(() => {
+    onSearch();
+  }, []);
 
   return (
     <div>
