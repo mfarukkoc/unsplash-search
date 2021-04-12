@@ -4,6 +4,7 @@ import Logo from "../assets/Logo.svg";
 import Dropdown from "./Dropdown";
 const Navbar = ({ searchQuery, setSearchQuery, onSearch }) => {
   const handleChange = (e) => {
+    setIndicateRequired(false);
     setSearchQuery({ ...searchQuery, search: e.target.value });
   };
   const [selected, setSelected] = useState({ index: -1, id: undefined });
@@ -11,22 +12,37 @@ const Navbar = ({ searchQuery, setSearchQuery, onSearch }) => {
     setSearchQuery({ ...searchQuery, collection: selected });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
-
+  const [indicateRequired, setIndicateRequired] = useState(false);
+  const checkRequired = () => {
+    if (!searchQuery.search.trim()) {
+      setIndicateRequired(true);
+      return false;
+    }
+    return true;
+  };
   return (
     <FlexWrapper>
       <img src={Logo} alt="Chamelon logo"></img>
 
       <InputWrap>
         <QueryInput
+          required
+          indicate={indicateRequired}
           onChange={handleChange}
           defaultValue={searchQuery.search}
           placeholder="Query"
           onKeyDown={(e) => {
-            if (e.key === "Enter") onSearch();
+            if (e.key === "Enter") if (checkRequired()) onSearch();
           }}
         ></QueryInput>
         <Dropdown selected={selected} setSelected={setSelected}></Dropdown>
-        <SearchButton onClick={onSearch}>SEARCH</SearchButton>
+        <SearchButton
+          onClick={() => {
+            if (checkRequired()) onSearch();
+          }}
+        >
+          SEARCH
+        </SearchButton>
       </InputWrap>
     </FlexWrapper>
   );
@@ -87,6 +103,7 @@ const QueryInput = styled.input`
   :focus {
     box-shadow: 0 0 0 3px #559bd1;
   }
+  box-shadow: ${(props) => (props.indicate ? "0 0 0 3px red" : "")};
   ::placeholder {
     color: #d5d7e5;
     font-weight: 600;
