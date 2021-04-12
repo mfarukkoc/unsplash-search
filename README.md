@@ -7,7 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## About Search Feature
 
-Search is sending request to `https://api.unsplash.com/search/photos/` using requested parameters. You can search with two parameters:
+Search is sending request to `https://api.unsplash.com/search/photos/` using requested parameters. The results will be cached in memory. You can search with two parameters:
 
 > Query (required): Free text search inside the selected collection or all of the images.
 
