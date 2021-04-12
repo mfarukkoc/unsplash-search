@@ -7,8 +7,7 @@ const unsplashService = () => {
     maxAge: 15 * 60 * 1000,
     exclude: {
       query: false
-    },
-    debug: true
+    }
   });
 
   // Create `axios` instance passing the newly created `cache.adapter`
