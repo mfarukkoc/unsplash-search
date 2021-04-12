@@ -4,12 +4,13 @@ import styled from "styled-components";
 import Masonry from "react-masonry-css";
 import unsplashService from "./unsplashService";
 import Spinner from "./components/Spinner";
+import ErrorAlert from "./components/ErrorAlert";
 function App() {
   const [searchQuery, setSearchQuery] = useState({
     search: "Istanbul",
     collection: ""
   });
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [totalPages, setTotalPages] = useState(1);
@@ -17,7 +18,7 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
 
   const onSearch = async () => {
-    setError(false);
+    setError("");
     setLoading(true);
     const response = await unsplashService.search({
       query: searchQuery.search,
@@ -26,7 +27,7 @@ function App() {
     });
     setLoading(false);
     if (response.error) {
-      setError(true);
+      setError(response.message);
     } else {
       setTotalPages(response.total_pages);
       if (currentPage > response.total_pages) {
@@ -53,7 +54,7 @@ function App() {
       ></Navbar>
       <ContentWrap>
         {error ? (
-          <div>Error</div>
+          <ErrorAlert message={error}></ErrorAlert>
         ) : loading ? (
           <Center>
             <Spinner></Spinner>

@@ -30,7 +30,7 @@ const unsplashService = {
       return response.data;
     } catch (error) {
       console.log(error);
-      return { error: true, message: error };
+      return { error: true, message: error.message };
     }
   }
 };
