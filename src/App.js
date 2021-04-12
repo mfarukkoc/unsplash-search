@@ -42,9 +42,7 @@ function App() {
   const handlePageChange = async (change) => {
     await onSearch(currentPage + change);
   };
-  useEffect(() => {
-    console.log(totalPages, currentPage);
-  }, [totalPages, currentPage]);
+
   useEffect(() => {
     onSearch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
