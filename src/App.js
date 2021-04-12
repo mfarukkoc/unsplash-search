@@ -80,7 +80,7 @@ function App() {
             {searchResults.length > 0 ? (
               <Center>
                 <PaginationButton
-                  disabled={currentPage <= totalPages}
+                  disabled={currentPage <= 1}
                   onClick={() => {
                     handlePageChange(-1);
                   }}
