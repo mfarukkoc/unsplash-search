@@ -17,30 +17,34 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchResults, setSearchResults] = useState([]);
 
-  const onSearch = async () => {
+  const onSearch = async (page = 1) => {
     setError("");
     setLoading(true);
+
     const response = await unsplashService.search({
       query: searchQuery.search,
       collection: searchQuery.collection?.id,
-      page: currentPage
+      page: page
     });
     setLoading(false);
     if (response.error) {
       setError(response.message);
     } else {
       setTotalPages(response.total_pages);
-      if (currentPage > response.total_pages) {
+      if (page > response.total_pages) {
         setCurrentPage(response.total_pages);
+      } else {
+        setCurrentPage(page);
       }
       setSearchResults(response?.results);
     }
   };
   const handlePageChange = async (change) => {
-    setCurrentPage(currentPage + change);
-
-    await onSearch();
+    await onSearch(currentPage + change);
   };
+  useEffect(() => {
+    console.log(totalPages, currentPage);
+  }, [totalPages, currentPage]);
   useEffect(() => {
     onSearch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
