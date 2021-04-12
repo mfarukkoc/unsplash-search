@@ -98,7 +98,7 @@ function App() {
                 </PaginationButton>
               </Center>
             ) : (
-              ""
+              <Center>No match for search.</Center>
             )}
           </>
         )}
