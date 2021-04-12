@@ -9,6 +9,7 @@ const Navbar = ({ searchQuery, setSearchQuery, onSearch }) => {
   const [selected, setSelected] = useState({ index: -1, id: undefined });
   useEffect(() => {
     setSearchQuery({ ...searchQuery, collection: selected });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
   return (
